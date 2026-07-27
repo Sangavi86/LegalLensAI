@@ -5,11 +5,14 @@ import helmet from '@fastify/helmet';
 import cookie from '@fastify/cookie';
 import rateLimit from '@fastify/rate-limit';
 
+import multipart from '@fastify/multipart';
+
 import { config } from './config/app.config';
 import { connectDatabase } from './core/database/mongodb.client';
 import { errorHandler } from './core/middleware/error-handler.middleware';
 import { healthRoutes } from './features/health/health.routes';
 import { authRoutes } from './features/auth/auth.routes';
+import { documentRoutes } from './features/documents/routes';
 
 /**
  * Build and configure the Fastify application instance.
@@ -29,11 +32,11 @@ export async function buildApp() {
     trustProxy: true,
   });
 
-  // ─── Security plugins ───────────────────────────────────
+  // ─── Security & Multipart plugins ──────────────────────
   await app.register(helmet, {
     contentSecurityPolicy: false, // Configured per-route in frontend
   });
-  console.log("FRONTEND_URL =", config.FRONTEND_URL);
+
   await app.register(cors, {
     origin: config.FRONTEND_URL,
     credentials: true,
@@ -43,6 +46,12 @@ export async function buildApp() {
   await app.register(cookie, {
     secret: config.COOKIE_SECRET,
     hook: 'onRequest',
+  });
+
+  await app.register(multipart, {
+    limits: {
+      fileSize: 20 * 1024 * 1024, // 20 MB limit
+    },
   });
 
   // ─── Rate limiting ─────────────────────────────────────
@@ -78,6 +87,7 @@ export async function buildApp() {
     async (v1) => {
       await v1.register(healthRoutes);
       await v1.register(authRoutes, { prefix: '/auth' });
+      await v1.register(documentRoutes, { prefix: '/documents' });
     },
     { prefix: '/api/v1' }
   );

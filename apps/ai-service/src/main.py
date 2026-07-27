@@ -20,6 +20,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from src.config.settings import get_settings
 from src.features.health.router import router as health_router, set_mongo_client
+from src.features.documents.router import router as documents_router
 
 # ─── Logging setup ────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -112,6 +113,7 @@ async def global_exception_handler(_request: Request, exc: Exception) -> JSONRes
 # ─── Routers ──────────────────────────────────────────────────────────────────
 # All routes are versioned under /ai/v1/
 app.include_router(health_router, prefix="/ai/v1", tags=["Health"])
+app.include_router(documents_router, prefix="/ai/v1", tags=["Documents"])
 
 # Future routers will be added here:
 # app.include_router(analysis_router, prefix="/ai/v1", tags=["Analysis"])

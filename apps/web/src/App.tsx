@@ -6,6 +6,8 @@ import { LoginPage } from './features/auth/pages/LoginPage';
 import { RegisterPage } from './features/auth/pages/RegisterPage';
 import { GoogleCallbackPage } from './features/auth/pages/GoogleCallbackPage';
 import { DashboardPage } from './features/auth/pages/DashboardPage';
+import { DocumentsPage } from './features/documents/pages/DocumentsPage';
+import { DocumentDetailsPage } from './features/documents/pages/DocumentDetailsPage';
 import './styles/global.css';
 import './styles/animations.css';
 
@@ -29,6 +31,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/documents"
+            element={
+              <ProtectedRoute>
+                <DocumentsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/documents/:id"
+            element={
+              <ProtectedRoute>
+                <DocumentDetailsPage />
               </ProtectedRoute>
             }
           />
