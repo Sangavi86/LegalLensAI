@@ -1,0 +1,30 @@
+# docker-compose.yml
+# NOTE: If MongoDB is already running as a local service (common on Windows),
+# you do NOT need to run this. The apps connect to mongodb://localhost:27017 by default.
+#
+# Only run this if you do NOT have MongoDB installed locally:
+#   docker compose up -d
+
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: jurismind_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: jurismind_dev
+    volumes:
+      - mongo_data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongo_data:
+    driver: local
