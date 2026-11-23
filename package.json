@@ -1,0 +1,31 @@
+{
+  "name": "legallens-ai-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LegalLens AI – Enterprise Multi-Agent Legal Intelligence Platform",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --prefix apps/web run dev",
+    "dev:gateway": "npm --prefix apps/api-gateway run dev",
+    "build": "npm --prefix packages/shared-types run build && npm --prefix apps/api-gateway run build && npm --prefix apps/web run build",
+    "build:web": "npm --prefix apps/web run build",
+    "build:gateway": "npm --prefix apps/api-gateway run build",
+    "build:types": "npm --prefix packages/shared-types run build",
+    "test:types": "npm --prefix packages/shared-types run test",
+    "test:gateway": "npm --prefix apps/api-gateway run test",
+    "test:web": "npm --prefix apps/web run test"
+  },
+  "keywords": [
+    "legal-ai",
+    "multi-agent",
+    "langgraph",
+    "hybrid-rag",
+    "contract-intelligence",
+    "india-law"
+  ],
+  "author": "LegalLens AI Architecture Team",
+  "license": "UNLICENSED"
+}

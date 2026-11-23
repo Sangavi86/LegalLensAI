@@ -1,0 +1,19 @@
+{
+  "name": "@legallens/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types and Zod runtime validation schemas for LegalLens AI",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/**/*.test.js || ts-node test-runner.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/node": "^22.13.4"
+  }
+}
